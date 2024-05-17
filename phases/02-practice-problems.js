@@ -45,25 +45,32 @@ if (obj[arr[i]]) {
   obj[arr[i]]=1
 }
 }
+// if the value is equal or larger than 2 than return
+// get object.values
+// get Object.keys
+// Find index in object.values when is duplicate, then find it in Object.keys
 for (let el in obj) {
   if (obj[el] === 2) {
     return el * 1 // force a string into an integer
   }
 }
-
-// if the value is equal or larger than 2 than return
-// get object.values
-// get Object.keys
-// Find index in object.values when is duplicate, then find it in Object.keys
-
-
-
-
 }
 
 
 function twoSum(nums, target) {
-  // Your code here 
+
+for (let i = 0; i < nums.length; i++) {
+
+for (let j = i+1; j < nums.length; j++) {
+
+  let sum = nums[i] + nums[j]
+
+if (sum === target) {
+  return true
+}
+}
+}
+return false
 }
 
 
