@@ -31,13 +31,34 @@ if (arr2.length >= arr1.length) {
   }
   return newArr;
 }
-
-
 }
 
 
 function duplicate(arr) {
-  // Your code here 
+let obj = {}
+
+for (let i = 0; i < arr.length; i++) {
+  // console.log(arr[i])
+if (obj[arr[i]]) {
+  obj[arr[i]]++
+} else {
+  obj[arr[i]]=1
+}
+}
+for (let el in obj) {
+  if (obj[el] === 2) {
+    return el * 1 // force a string into an integer
+  }
+}
+
+// if the value is equal or larger than 2 than return
+// get object.values
+// get Object.keys
+// Find index in object.values when is duplicate, then find it in Object.keys
+
+
+
+
 }
 
 
