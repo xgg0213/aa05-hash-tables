@@ -59,18 +59,26 @@ for (let el in obj) {
 
 function twoSum(nums, target) {
 
+// O(n^2) solution
+// for (let i = 0; i < nums.length; i++) {
+
+// for (let j = i+1; j < nums.length; j++) {
+
+//   let sum = nums[i] + nums[j]
+
+// if (sum === target) {
+//   return true
+// }
+// }
+// }
+// return false
+
+// Option 2 with array.includes: is this O(n)?
 for (let i = 0; i < nums.length; i++) {
-
-for (let j = i+1; j < nums.length; j++) {
-
-  let sum = nums[i] + nums[j]
-
-if (sum === target) {
-  return true
+  if (nums.slice(0,i).concat(nums.slice(i+1)).includes(target-nums[i])) return true
 }
-}
-}
-return false
+return false;
+
 }
 
 

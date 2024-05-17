@@ -107,24 +107,45 @@ class HashTable { // get O(1), set O(1), deleteKey O(1)
     let current = this.data[index]
     let prev = null;
     
-    
-    while (current && current.key !== key) { // While the current key does not match, then we continue to iterate
+    // option 1
+    // while (current && current.key !== key) { // While the current key does not match, then we continue to iterate
+    //   prev = current;
+    //   current = current.next
+    //   }
+    //   // Check that when a value is found, then do something (e.g. delete)
+    //   // If there is no prev, then execute line 123 block.
+    //   if (!current) {
+    //     return "Key not found"
+    //   }
+    //   if (!prev) {
+    //       this.data[index] = current.next;
+    //       this.count--;
+    //       return
+    //   } else {
+    //     prev.next = current.next
+    //     this.count--;
+    //   }
+
+    // option 2
+    while(current) {
+      if (current.key === key) {
+        // when current is not the 1st node
+        if (prev) {
+          prev.next = current.next;
+          // when current is the 1st node
+        } else {
+          this.data[index] = current.next;
+        }
+        this.count--; // reduce this.count by 1 when deleting is successful
+        return; // stop executing the function
+        
+      }
+      // if nothing happens at this iteration, move on to the next node
       prev = current;
       current = current.next
-      }
-      // Check that when a value is found, then do something (e.g. delete)
-      // If there is no prev, then execute line 123 block.
-      if (!current) {
-        return "Key not found"
-      }
-      if (!prev) {
-          this.data[index] = current.next;
-          this.count--;
-          return
-      } else {
-        prev.next = current.next
-        this.count--;
-      }
+    }
+    // after iterating through the entire element, if nothing returned, then return the following
+    return 'Key not found'
   }
 
 }
@@ -132,4 +153,37 @@ class HashTable { // get O(1), set O(1), deleteKey O(1)
 
 module.exports = HashTable;
 
+let hashTable = new HashTable(2)
+hashTable.insert("key1", "value1")
+hashTable.insert("key2", "value2")
+hashTable.insert("key3", "value3")
+hashTable.insert("key5", "value5")
+hashTable.insert("key9", "value9")
+hashTable.insert("key10", "value10")
 
+// check for values
+console.log(hashTable.read("key2"))//.to.equal("value2")
+console.log(hashTable.read("key9"))//.to.equal("value9")
+console.log(hashTable.read("key10"))//.to.equal("value10");
+
+console.log(hashTable.count)//.to.equal(6);
+
+// delete key value pairs
+hashTable.delete("key2")
+hashTable.delete("key9")
+hashTable.delete("key10")
+
+// check for values
+console.log(hashTable.read("key1"))//.to.equal("value1");
+console.log(hashTable.read("key3"))//.to.equal("value3");
+console.log(hashTable.read("key5"))//.to.equal("value5");
+
+console.log(hashTable.read("key2"))//.to.equal(undefined)
+console.log(hashTable.read("key9"))//.to.equal(undefined)
+console.log(hashTable.read("key10"))//.to.equal(undefined)
+
+console.log(hashTable.count)//.to.equal(3);
+
+// return string if key doesn't exist
+console.log(hashTable.delete("key2"))//.to.equal("Key not found")
+console.log(hashTable.delete("key10"))//.to.equal("Key not found")
