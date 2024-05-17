@@ -35,6 +35,9 @@ class HashTable { // get O(1), set O(1), deleteKey O(1)
 
   insert(key, value) {
     // Your code here 
+    if (this.capacity <= 0.7 * this.count) {
+      this.resize()
+    }
     let node = new KeyValuePair(key, value);
     this.count++;
 
@@ -97,9 +100,33 @@ class HashTable { // get O(1), set O(1), deleteKey O(1)
 
 
   delete(key) {
-    // Your code here 
+    // Find the index in the array for a given key
+    // Create a loop to iterate through possible linked lists
 
+    let index = this.hashMod(key)
+    let current = this.data[index]
+    let prev = null;
+    
+    
+    while (current && current.key !== key) { // While the current key does not match, then we continue to iterate
+      prev = current;
+      current = current.next
+      }
+      // Check that when a value is found, then do something (e.g. delete)
+      // If there is no prev, then execute line 123 block.
+      if (!current) {
+        return "Key not found"
+      }
+      if (!prev) {
+          this.data[index] = current.next;
+          this.count--;
+          return
+      } else {
+        prev.next = current.next
+        this.count--;
+      }
   }
+
 }
 
 
