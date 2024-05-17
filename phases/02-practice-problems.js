@@ -73,9 +73,20 @@ function twoSum(nums, target) {
 // }
 // return false
 
-// Option 2 with array.includes: is this O(n)?
+// Option 2 with array.includes: still O(n) as array.includes is also O(n)
+// for (let i = 0; i < nums.length; i++) {
+//   if (nums.slice(0,i).concat(nums.slice(i+1)).includes(target-nums[i])) return true
+// }
+// return false;
+
+// Option 3: using Set, which is O(1)
+let set = new Set([]); // initialize a set variable as an empty set
+
 for (let i = 0; i < nums.length; i++) {
-  if (nums.slice(0,i).concat(nums.slice(i+1)).includes(target-nums[i])) return true
+  if (set.has(nums[i])) { // check if nums[i] has a counterpart that adds up to target
+    return true;
+  }
+  set.add(target-nums[i]); // add the needed counterpart to the set if not found yet
 }
 return false;
 
@@ -84,6 +95,7 @@ return false;
 
 function wordPattern(pattern, strings) {
   // Your code here 
+
 }
 
 
