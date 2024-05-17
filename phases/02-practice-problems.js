@@ -1,5 +1,18 @@
 function anagrams(str1, str2) {
-  // Your code here 
+let sort1 = str1.split("").sort()
+let sort2 = str2.split("").sort()
+
+if (sort1.length === sort2.length) {
+for (let i = 0; i < sort1.length; i++) {
+if (sort1[i] !== (sort2[i])) {
+  return false
+}
+}
+return true
+}
+return false
+
+
 }
 
 
