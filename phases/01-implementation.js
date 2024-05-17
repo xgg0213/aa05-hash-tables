@@ -80,9 +80,15 @@ class HashTable { // get O(1), set O(1), deleteKey O(1)
 
     this.capacity = capacity * 2;
     this.data = new Array(this.capacity);
+    this.count = 0;
 
     for (let i = 0; i < data.length; i++) {
-      
+      let current = data[i];
+      while (current) {
+        this.insert(current.key, current.value);
+        current = current.next;
+      }
+
     }
 
 
