@@ -11,13 +11,28 @@ if (sort1[i] !== (sort2[i])) {
 return true
 }
 return false
-
-
 }
 
 
 function commonElements(arr1, arr2) {
-  // Your code here 
+let newArr = []
+if (arr1.length > arr2.length) {
+  for (let i = 0; i < arr1.length; i++) {
+    if (arr2.includes(arr1[i])) {
+      newArr.push(arr1[i])
+    }
+  }
+}
+if (arr2.length >= arr1.length) {
+  for (let i = 0; i < arr2.length; i++) {
+    if (arr1.includes(arr2[i])) {
+      newArr.push(arr2[i])
+    }
+  }
+  return newArr;
+}
+
+
 }
 
 
