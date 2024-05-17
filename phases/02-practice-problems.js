@@ -119,22 +119,23 @@ function wordPattern(pattern, strings) {
   // initialize a set & obj
   let obj = {}; // store the unique elements in pattern as key; the 1st matching strings (with the same index) as value;
   let set = new Set([]); // store the unique elements in pattern
+  let setValue = new Set([]) // store unique values in strings
 
   // iterate through the string & pattern at the same time
   for (let i = 0; i < pattern.length; i++) {
     let key = pattern[i];
     let value = strings[i];
-    let values = new Set(Object.values(obj));
 
     // return false if the key exists but value differs
     if (set.has(key) && obj[key] !== value) return false;
 
     // return false if the key does not exist but value already exists
-    if (!set.has(key) && values.has(value)) return false;
+    if (!set.has(key) && setValue.has(value)) return false;
 
     // else adding the key and value to the set and obj;
       set.add(key);
       obj[key] = value;
+      setValue.add(value);
     
   }
   return true;
