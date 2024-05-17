@@ -15,22 +15,39 @@ return false
 
 
 function commonElements(arr1, arr2) {
-let newArr = []
-if (arr1.length > arr2.length) {
-  for (let i = 0; i < arr1.length; i++) {
-    if (arr2.includes(arr1[i])) {
-      newArr.push(arr1[i])
-    }
-  }
+// option 1: use array.includes: is this O(n^2)?
+// let newArr = []
+// if (arr1.length > arr2.length) {
+//   for (let i = 0; i < arr1.length; i++) {
+//     if (arr2.includes(arr1[i])) {
+//       newArr.push(arr1[i])
+//     }
+//   }
+// }
+// if (arr2.length >= arr1.length) {
+//   for (let i = 0; i < arr2.length; i++) {
+//     if (arr1.includes(arr2[i])) {
+//       newArr.push(arr2[i])
+//     }
+//   }
+// }
+// return newArr;
+
+// option 2: use obj, O(n);
+let newArr = [...arr1, ...arr2];
+let obj = {};
+let res = [];
+
+for (let i = 0; i < newArr.length; i++) {
+  if (obj[newArr[i]]) obj[newArr[i]]++;
+  else obj[newArr[i]] = 1;
 }
-if (arr2.length >= arr1.length) {
-  for (let i = 0; i < arr2.length; i++) {
-    if (arr1.includes(arr2[i])) {
-      newArr.push(arr2[i])
-    }
-  }
-  return newArr;
+
+for (let el in obj) {
+  if (obj[el] >= 2) res.push(el * 1);
 }
+return res;
+
 }
 
 
@@ -95,8 +112,39 @@ return false;
 
 function wordPattern(pattern, strings) {
   // Your code here 
+  // if the length of pattern and string does not match, return false;
+  if (pattern.length !== strings.length) return false;
 
+  // when the lengths match
+  // initialize a set & obj
+  let obj = {}; // store the unique elements in pattern as key; the 1st matching strings (with the same index) as value;
+  let set = new Set([]); // store the unique elements in pattern
+
+  // iterate through the string & pattern at the same time
+  for (let i = 0; i < pattern.length; i++) {
+    let key = pattern[i];
+    let value = strings[i];
+    let values = new Set(Object.values(obj));
+
+    // return false if the key exists but value differs
+    if (set.has(key) && obj[key] !== value) return false;
+
+    // return false if the key does not exist but value already exists
+    if (!set.has(key) && values.has(value)) return false;
+
+    // else adding the key and value to the set and obj;
+      set.add(key);
+      obj[key] = value;
+    
+  }
+  return true;
 }
 
 
 module.exports = [anagrams, commonElements, duplicate, twoSum, wordPattern];
+
+
+// console.log(wordPattern("ABBA", ['dog', 'cat', 'cat', 'dog']))//.to.be.true;
+console.log(wordPattern("ABBA", ['dog', 'dog', 'dog', 'dog']))//.to.be.false;
+// console.log(wordPattern("AAAA", ['dog', 'dog', 'dog', 'dog']))//.to.be.true;
+// console.log(wordPattern("ABCD", ['dog', 'cat', 'dog', 'cat']))//.to.be.false;
