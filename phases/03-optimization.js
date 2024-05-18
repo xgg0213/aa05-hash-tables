@@ -83,6 +83,97 @@ function newAlphabet(str1, str) {
 
 }
 // check answers
-console.log(newAlphabet('dino', 'abcdefghijklmnopqrstuvwxyz'));           // => true
-console.log(newAlphabet('leetcode', 'abcdefghijklmnopqrstuvwxyz'));       // => false
-console.log(newAlphabet('leetcod', 'labefghijkmnpqrstucvowxdyz'));        // => true
+// console.log(newAlphabet('dino', 'abcdefghijklmnopqrstuvwxyz'));           // => true
+// console.log(newAlphabet('leetcode', 'abcdefghijklmnopqrstuvwxyz'));       // => false
+// console.log(newAlphabet('leetcod', 'labefghijkmnpqrstucvowxdyz'));        // => true
+
+function longestPalindrome(str) {
+    // Palindrome has 2 options: 1) all character with even# appearances; 2) only 1 character has odd# appearance;
+
+    // create an obj with #appearances for each character
+    let obj = {};
+
+    for (let i = 0; i < str.length; i++) {
+        if (obj[str[i]]) obj[str[i]] += 1;
+        else obj[str[i]] = 1;
+    }
+
+    let values = Object.values(obj);
+    let countEven = 0;
+    let countOdd = 0;
+
+    for (let i = 0; i < values.length; i++) {
+        if (values[i] % 2 === 0) countEven += values[i];
+        else if(countOdd < values[i]) countOdd = values[i];
+    }
+
+    return countEven+countOdd;
+}
+// check answers
+// console.log(longestPalindrome("abccccdd"));
+// console.log(longestPalindrome("aeefffbccccdd")); // 'deccfffcced'
+// console.log(longestPalindrome("aeefffbbccccdd")) // 'bdeccfffccedb'
+
+
+function longestSubstr(str) {
+    // create obj for each character of the string, keys.length is the longest substr without repeating characters
+    let obj = {};
+    for (let i = 0; i < str.length; i++) {
+        if (obj[str[i]]) obj[str[i]] += 1;
+        else obj[str[i]] = 1;
+    }
+
+    let keys = Object.keys(obj);
+    return keys.length;
+}
+// check answers
+// console.log(longestSubstr("abcabcbb"));      // => 3, where the longest substring is "abc"
+// console.log(longestSubstr("bbbbb"));         // => 1, where the longest substring is "b"
+
+
+function maxSubarr(arr) {
+    // sort the array and create an obj with each integer and its appearances#
+    arr.sort();
+    
+    
+    let newArr = [];
+    let obj = {};
+
+    for (let i = 0; i < arr.length; i++) {
+        if (obj[arr[i]]) obj[arr[i]] += 1;
+        else obj[arr[i]] = 1;
+    }
+
+    let entries = Object.entries(obj);
+    let count = 0;
+    let res = new Set([]);
+    for (let i = 0; i < entries.length-1; i++) {
+        let el = entries[i];
+        let el1 = entries[i+1];
+
+        // for elements without +1;
+        if (el[1] > count) {
+            count = el[1];
+            res = new Set([el[0]*1]) // 
+        }
+
+        // for paired elements within 1
+        if ((el1[0] * 1 - el[0]*1 <= 1) && (el1[1] + el[1]) > count) {
+            count = el1[1] + el[1];
+            res = new Set([el[0]*1, el1[0]*1]) //el[0] * el[1] + el1[0] * el[1]; 
+        } 
+    }
+    
+    //create result array based on res, and return its length;
+    let resArr = [];
+    for (let i = 0; i < arr.length; i++) {
+        if (res.has(arr[i])) resArr.push(arr[i]); 
+    }
+    return resArr.length;
+
+
+
+}
+// check answers
+console.log(maxSubarr([1,3,2,2,5,2,3,7]));  // => 5 because the longest subarray is [3,2,2,2,3]
+console.log(maxSubarr([1,1,1,1,3]));  // => 4 because the longest subarray is [1,1,1,1]
